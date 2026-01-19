@@ -2,18 +2,20 @@
 
 namespace App\Filament\Resources\AcademicClasses\Tables;
 
+use Filament\Tables\Table;
+use App\Models\AcademicClass;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\EditAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
-use Filament\Tables\Table;
+use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Resources\AcademicClasses\AcademicClassResource;
 
 class AcademicClassesTable
 {

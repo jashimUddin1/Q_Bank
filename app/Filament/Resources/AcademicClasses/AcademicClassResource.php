@@ -55,8 +55,8 @@ class AcademicClassResource extends Resource
     {
         return [
             'index' => ListAcademicClasses::route('/'),
-            'create' => CreateAcademicClass::route('/create'),
-            'edit' => EditAcademicClass::route('/{record}/edit'),
+            // 'create' => CreateAcademicClass::route('/create'),
+            // 'edit' => EditAcademicClass::route('/{record}/edit'),
         ];
     }
 }
