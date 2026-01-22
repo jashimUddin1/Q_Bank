@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSubjects extends CreateRecord
 {
     protected static string $resource = SubjectsResource::class;
+
+     protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

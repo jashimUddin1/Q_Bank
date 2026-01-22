@@ -7,7 +7,7 @@ use App\Filament\Resources\Subjects\Pages\EditSubjects;
 use App\Filament\Resources\Subjects\Pages\ListSubjects;
 use App\Filament\Resources\Subjects\Schemas\SubjectsForm;
 use App\Filament\Resources\Subjects\Tables\SubjectsTable;
-use App\Models\Subjects;
+use App\Models\Subject;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -16,9 +16,9 @@ use Filament\Tables\Table;
 
 class SubjectsResource extends Resource
 {
-    protected static ?string $model = Subjects::class;
+    protected static ?string $model = Subject::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::BookOpen;
 
     public static function form(Schema $schema): Schema
     {
@@ -41,8 +41,8 @@ class SubjectsResource extends Resource
     {
         return [
             'index' => ListSubjects::route('/'),
-            'create' => CreateSubjects::route('/create'),
-            'edit' => EditSubjects::route('/{record}/edit'),
+            // 'create' => CreateSubjects::route('/create'),
+            // 'edit' => EditSubjects::route('/{record}/edit'),
         ];
     }
 }
