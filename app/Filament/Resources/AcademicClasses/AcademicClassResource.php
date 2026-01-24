@@ -18,6 +18,8 @@ class AcademicClassResource extends Resource
 {
     protected static ?string $model = AcademicClass::class;
 
+    protected static ?int $navigationSort = 2;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::AcademicCap;
 
     public static function getNavigationLabel(): string

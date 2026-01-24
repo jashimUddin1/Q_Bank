@@ -18,6 +18,8 @@ class SubjectsResource extends Resource
 {
     protected static ?string $model = Subject::class;
 
+    protected static ?int $navigationSort = 3;
+    
     protected static string|BackedEnum|null $navigationIcon = Heroicon::BookOpen;
 
     public static function form(Schema $schema): Schema

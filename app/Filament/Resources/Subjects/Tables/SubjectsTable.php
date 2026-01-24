@@ -18,16 +18,20 @@ class SubjectsTable
             ->columns([
                 TextColumn::make('sub_name')
                     ->label('Subject Name')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('academicClass.name')
                     ->label('Class')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
             ])
+            
             ->filters([
                 SelectFilter::make('class_id')->label('Class')->relationship('academicClass', 'name')->preload(),
                    
             ])
+            ->deferFilters(false)
             ->filtersLayout(FiltersLayout::AboveContent) 
             ->recordActions([
                 EditAction::make(),

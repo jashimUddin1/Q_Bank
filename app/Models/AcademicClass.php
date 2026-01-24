@@ -15,7 +15,7 @@ class AcademicClass extends Model
 
     public function subjects():HasMany
     {
-        return $this->hasMany(Subject::class, 'class_id');
+        return $this->hasMany(Subject::class, 'class_id', 'id');
     }
     
 }

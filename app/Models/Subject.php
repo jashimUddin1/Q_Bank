@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Chapter;
+use App\Models\AcademicClass;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Subject extends Model
 {
@@ -14,8 +17,12 @@ class Subject extends Model
         'sub_name',
     ];
 
-    public function academicClass(): BelongsTo
+    public function Chapter():HasMany
     {
-        return $this->belongsTo(academicClass::class, 'class_id');
+        return $this->hasMany(Chapter::class, 'subject_id', 'id');
+    }
+    public function AcademicClass(): BelongsTo
+    {
+        return $this->belongsTo(AcademicClass::class, 'class_id', 'id');
     }
 }
