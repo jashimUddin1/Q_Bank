@@ -26,7 +26,7 @@ class MCQQuestionForm
                     ->options(AcademicClass::query()->pluck('name', 'id'))
                     ->preload()
                     ->live()
-                    ->afterStateUpdated(function(Set $set){
+                    ->afterStateUpdated(function (Set $set) {
                         $set('subject_id', null);
                         $set('chapter_id', null);
                         $set('lesson_id', null);
@@ -40,8 +40,8 @@ class MCQQuestionForm
                         ->pluck('sub_name', 'id'))
                     ->preload()
                     ->live()
-                    ->disabled(fn(Get $get)=>blank($get('class_id')))
-                    ->afterStateUpdated(function(Set $set){
+                    ->disabled(fn(Get $get) => blank($get('class_id')))
+                    ->afterStateUpdated(function (Set $set) {
                         $set('chapter_id', null);
                         $set('lesson_id', null);
                     }),
@@ -49,37 +49,40 @@ class MCQQuestionForm
 
                 Select::make('chapter_id')
                     ->label('Chapter')
-                    ->options(fn(Get $get)=>Chapter::query()
-                        ->where('subject_id',$get('subject_id'))
+                    ->options(fn(Get $get) => Chapter::query()
+                        ->where('subject_id', $get('subject_id'))
                         ->pluck('chapter_name', 'id'))
                     ->preload()
                     ->live()
-                    ->disabled(fn(Get $get)=>blank($get('subject_id')))
-                    ->afterStateUpdated(function(Set $set){
+                    ->disabled(fn(Get $get) => blank($get('subject_id')))
+                    ->afterStateUpdated(function (Set $set) {
                         $set('lesson_id', null);
                     })
                     ->nullable(),
 
                 Select::make('lesson_id')
                     ->label('Lesson')
-                    ->options(fn(Get $get)=>Lesson::query()
+                    ->options(fn(Get $get) => Lesson::query()
                         ->where('chapter_id', $get('chapter_id'))
                         ->pluck('lesson_name', 'id'))
                     ->preload()
                     ->live()
-                    ->disabled(fn(Get $get)=> blank($get('chapter_id')))
+                    ->disabled(fn(Get $get) => blank($get('chapter_id')))
                     ->nullable(),
 
-                FileUpload::make('proviking_img')
-                    ->label('Question Image')
-                    ->image()
-                    ->maxSize(3072)
-                    ->directory('proviking_images')
-                    ->nullable()
-                    ->columnSpan(1),
+                // FileUpload::make('proviking_img')
+                //     ->label('Question Image')
+                //     ->image()
+                //     ->disk('public')
+                //     ->directory('mcq_images')
+                //     ->visibility('public')
+                //     ->maxSize(3072)
+                //     ->dehydrated(true)
+                //     ->nullable(),
 
-                TextInput::make('questions')->label('Quesiton')->placeholder('Write Question')->required()->columnSpan(3),
-              
+
+                TextInput::make('questions')->label('Quesiton')->placeholder('Write Question')->required()->columnSpan(4),
+
                 TextInput::make('option_a')->label('Option A')->placeholder('Option A')->required(),
                 TextInput::make('option_b')->label('Option B')->placeholder('Option B')->required(),
                 TextInput::make('option_c')->label('Option C')->placeholder('Option C')->required(),
@@ -107,20 +110,29 @@ class MCQQuestionForm
                         'board_question' => 'Board Question',
                         'model_question' => 'Model Quesiton',
                         'custom_question' => 'Custom Question'
-                    ]),
-                TextInput::make('board_name')
+                    ])
+                    ->live(),
+                Select::make('board_name')
                     ->label('Board Name')
-                    ->disabled(fn(Get $get)=> $get('type') != 'board_question')
-                    ->required(fn(Get $get)=> $get('type') == 'board_question'),
+                    ->disabled(fn(Get $get) => $get('type') != 'board_question')
+                    ->required(fn(Get $get) => $get('type') == 'board_question')
+                    ->options([
+                        'dhaka' => 'Dhaka',
+                        'chittagong' => 'Chittagong',
+                        'rajshahi' => 'Rajshahi',
+                        'khulna' => 'Khulna',
+                        'barishal' => 'Barishal',
+                        'sylhet' => 'Sylhet',
+                        'rangpur' => 'Rangpur',
+                        'mymensingh' => 'Mymensingh',
+                    ]),
 
                 TextInput::make('year')
                     ->label('Year')
                     ->numeric()
                     ->required()
                     ->default(now()->year),
-                
+
             ]);
     }
 }
-
-

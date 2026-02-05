@@ -11,23 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mcq_questions', function (Blueprint $table) {
+        Schema::create('cq_questions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('class_id');
             $table->bigInteger('subject_id');
             $table->bigInteger('chapter_id')->nullable();
             $table->bigInteger('lesson_id')->nullable();
             $table->string('proviking_img')->nullable();
-            $table->string('questions');
-            $table->string('option_a');
-            $table->string('option_b');
-            $table->string('option_c');
-            $table->string('option_d');
-            $table->string('right_answer');
-            $table->integer('marks')->default(1);
+            $table->string('proviking');
+            $table->integer('total_marks')->default(10);
+            $table->string('question_a');
+            $table->string('question_b');
+            $table->string('question_c');
+            $table->string('question_d');
+            $table->integer('marks_a')->default(1);
+            $table->integer('marks_b')->default(2);
+            $table->integer('marks_c')->default(3);
+            $table->integer('marks_d')->default(4);
             $table->enum('level', ['easy', 'medium', 'hard'])->default('easy');
             $table->string('type');
-            $table->string('board_name');
+            $table->string('board_name')->nullable(); 
             $table->integer('year');
             $table->bigInteger('insert_by');
             $table->timestamps();
@@ -39,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mcq_questions');
+        Schema::dropIfExists('cq_questions');
     }
 };

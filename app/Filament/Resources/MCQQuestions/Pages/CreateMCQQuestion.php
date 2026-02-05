@@ -14,8 +14,13 @@ class CreateMCQQuestion extends CreateRecord
     protected static string $resource = MCQQuestionResource::class;
 
     public function getTitle(): string | Htmlable
-{
-    return __('Add MCQ');
-}
+    {
+        return __('Add MCQ');
+    }
+
+     protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 
 }

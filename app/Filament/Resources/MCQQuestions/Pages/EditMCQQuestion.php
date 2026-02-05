@@ -16,4 +16,19 @@ class EditMCQQuestion extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+     protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+{
+    if (empty($data['proviking_img'])) {
+        $data['proviking_img'] = $this->record->proviking_img;
+    }
+
+    return $data;
+}
+
 }

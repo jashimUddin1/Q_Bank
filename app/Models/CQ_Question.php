@@ -3,42 +3,40 @@
 namespace App\Models;
 
 use App\Models\Lesson;
+use App\Models\Chapter;
+use App\Models\Subject;
 use App\Models\AcademicClass;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class MCQ_Question extends Model
+class CQ_Question extends Model
 {
-    protected $table = 'mcq_questions';
-
+    protected $table = 'cq_questions';
     protected static function booted()
     {
-        static::creating(function ($model) {
+        static::creating(function($model){
             $model->insert_by = Auth::id();
         });
     }
 
-    protected $fillable = [
+     protected $fillable = [
         'class_id',
         'subject_id',
         'chapter_id',
         'lesson_id',
         'proviking_img',
-        'questions',
-        'option_a',
-        'option_b',
-        'option_c',
-        'option_d',
-        'right_answer',
+        'proviking',
+        'question_a',
+        'question_b',
+        'question_c',
+        'question_d',
         'level',
         'type',
         'board_name',
         'year',
         'insert_by',
     ];
-
-    // App\Models\Question.php
 
     public function academicClass()
     {
