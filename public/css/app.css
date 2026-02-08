@@ -1,0 +1,344 @@
+/* ========================================================================= */
+/* 1. Global & Layout Fixes */
+/* ========================================================================= */
+.z-35 {
+    z-index: 35;
+}
+
+.z-40 {
+    z-index: 40;
+}
+
+.z-55 {
+    z-index: 55;
+}
+
+.z-60 {
+    z-index: 60;
+}
+
+.z-70 {
+    z-index: 70;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.no-scroll {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+html.no-scroll {
+    overflow-y: hidden !important;
+}
+
+.sticky-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    /* margin-right: -10px; */
+    padding-right: 10px;
+    z-index: 30;
+}
+
+#question-list-scroll-wrapper {
+    height: auto;
+    overflow-y: visible;
+}
+
+@media (min-width: 1024px) {
+    #question-list-scroll-wrapper {
+        height: calc(100vh - 143px);
+        overflow-y: auto;
+    }
+}
+
+/* FIX: Filter Sidebar Styling (Modal/Overlay for Mobile) */
+#filter-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: none;
+    justify-content: end;
+    align-items: center;
+}
+
+#filter-modal-overlay.open {
+    display: flex;
+}
+
+#filter-sidebar {
+    width: 95%;
+    max-width: 400px;
+    max-height: 100%;
+    overflow-y: auto;
+    border-radius: 0.75rem;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: all 0.9s ease-in-out;
+}
+
+#filter-modal-overlay.open #filter-sidebar {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* NEW: Quick Level Filter Dropdown Styling */
+#level-filter-dropdown {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 280px;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 55;
+    display: none;
+    transform-origin: top right;
+    animation: fadeInScale 0.2s ease-out;
+    margin-top: 0.5rem;
+}
+
+.dark #level-filter-dropdown {
+    background-color: #1f2937;
+    /* gray-800 */
+}
+
+#level-filter-dropdown.open {
+    display: block;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* A4 Preview Styling (Desktop Sticky) */
+#a4-preview-wrapper {
+    position: sticky;
+    top: 73px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    padding-bottom: 2rem;
+}
+
+#a4-preview {
+    aspect-ratio: 210 / 297;
+    min-height: 400px;
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Modal Styling (A4 Preview) */
+#a4-preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#a4-preview-modal.open {
+    display: flex;
+}
+
+#a4-preview-modal-content {
+    width: 95%;
+    max-width: 500px;
+    max-height: 90%;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+}
+
+/* 2. Active/Selected States */
+.filter-btn.active {
+    background-color: #9112BC !important;
+    color: white !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* IMPROVED: Selected Question Card Style */
+.question-card.selected {
+    background-color: #FAF3FC;
+    /* custom-purple-50 */
+    border-color: #C088E0 !important;
+    /* custom-purple-400 */
+    border-left-width: 4px;
+    border-left-color: #9112BC !important;
+    /* custom-purple-600 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(145, 18, 188, 0.15);
+}
+
+.dark .question-card.selected {
+    background-color: #29003C;
+    /* custom-purple-950 */
+    border-color: #690786 !important;
+    /* custom-purple-800 */
+    border-left-color: #A85DD4 !important;
+    /* custom-purple-500 */
+}
+
+.search-bar-wrapper {
+    flex-grow: 1.5;
+    min-width: 150px;
+}
+
+/* NEW: Star button styling */
+.star-btn .star-solid {
+    display: none;
+}
+
+.star-btn.starred .star-solid {
+    display: block;
+}
+
+.star-btn.starred .star-outline {
+    display: none;
+}
+
+.star-btn.starred .star-solid {
+    color: #FBBF24;
+}
+
+/* text-amber-400 */
+
+
+/* 3. Print/Column Layout (Unchanged) */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background-color: white !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    #app {
+        display: block;
+        grid-template-columns: none !important;
+        min-height: auto;
+    }
+
+    #qbank-section {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .a4-print-area {
+        width: 210mm;
+        min-height: 297mm;
+        max-width: none;
+        margin: 0 auto;
+        padding: 10mm;
+        box-shadow: none;
+        border: none;
+        font-size: 11pt !important;
+    }
+
+    .preview-list {
+        list-style-type: decimal;
+    }
+
+    .two-column-layout-print {
+        column-count: 2;
+        column-gap: 20mm;
+    }
+
+    .preview-list li {
+        page-break-inside: avoid;
+        break-inside: avoid-column;
+        list-style-position: inside;
+    }
+
+    .hidden-page-2 {
+        display: none !important;
+    }
+
+    .cq-preview-content {
+        break-after: avoid-page;
+    }
+
+    .mcq-options-wrapper.mcq-print-layout div {
+        display: inline-block !important;
+        margin-right: 1.5rem !important;
+        width: auto !important;
+    }
+}
+
+.two-column-layout-live {
+    column-count: 2;
+    column-gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.two-column-layout-live li {
+    break-inside: avoid-column;
+}
+
+/* IMPROVED: MCQ Options Layout for Card vs Preview */
+.mcq-options-wrapper.card-layout .mcq-option {
+    display: block;
+    width: 100%;
+}
+
+.mcq-options-wrapper.preview-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    /* row and column gap */
+}
+
+.mcq-options-wrapper.preview-layout .mcq-option {
+    display: inline-flex;
+}
+
+/* For Selects and Inputs (Better styling) */
+.custom-select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    color: #1f2937;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dark .custom-select {
+    border: 1px solid #374151;
+    background-color: #1f2937;
+    color: #f3f4f6;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #9112BC;
+    box-shadow: 0 0 0 1px #9112BC;
+}
