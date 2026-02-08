@@ -1,3 +1,4 @@
+//app.js
 // Global State variables
 let totalMarks = 0;
 
@@ -62,8 +63,143 @@ function closeFilterSidebar(event) {
     applyAllFilters();
 }
 
+// ===============================
+// DOM Ready
+// ===============================
 document.addEventListener("DOMContentLoaded", () => {
     initializeTheme();
+
+    // ---------------------------
+    // Helpers
+    // ---------------------------
+    const $ = (id) => document.getElementById(id);
+
+    function resetSelect(selectEl, placeholder) {
+        if (!selectEl) return;
+        selectEl.innerHTML = "";
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = placeholder;
+        selectEl.appendChild(opt);
+    }
+
+    async function fetchJson(url) {
+        const res = await fetch(url, {
+            headers: { Accept: "application/json" },
+        });
+        if (!res.ok) throw new Error("Request failed");
+        return res.json();
+    }
+
+    function fillOptions(selectEl, items, textKey) {
+        if (!selectEl || !Array.isArray(items)) return;
+
+        items.forEach((item) => {
+            const opt = document.createElement("option");
+            opt.value = item.id;
+            opt.textContent = item[textKey] ?? "";
+            selectEl.appendChild(opt);
+        });
+    }
+
+    // ---------------------------
+    // Chain Loaders
+    // ---------------------------
+    async function loadSubjects(scope) {
+        resetSelect(scope.subjectEl, "বিষয় নির্বাচন করুন");
+        resetSelect(scope.chapterEl, "অধ্যায় নির্বাচন করুন");
+        resetSelect(scope.lessonEl, "পাঠ নির্বাচন করুন");
+
+        const classId = scope.classEl?.value;
+        if (!classId) return;
+
+        try {
+            const url = `${window.QBANK.subjectsUrl}?class_id=${classId}`;
+            const data = await fetchJson(url);
+            fillOptions(scope.subjectEl, data, "sub_name");
+        } catch (e) {
+            console.error("Subjects load error:", e);
+        }
+    }
+
+    async function loadChapters(scope) {
+        resetSelect(scope.chapterEl, "অধ্যায় নির্বাচন করুন");
+        resetSelect(scope.lessonEl, "পাঠ নির্বাচন করুন");
+
+        const subjectId = scope.subjectEl?.value;
+        if (!subjectId) return;
+
+        try {
+            const url = `${window.QBANK.chaptersUrl}?subject_id=${subjectId}`;
+            const data = await fetchJson(url);
+            fillOptions(scope.chapterEl, data, "chapter_name");
+        } catch (e) {
+            console.error("Chapters load error:", e);
+        }
+    }
+
+    async function loadLessons(scope) {
+        resetSelect(scope.lessonEl, "পাঠ নির্বাচন করুন");
+
+        const chapterId = scope.chapterEl?.value;
+        if (!chapterId) return;
+
+        try {
+            const url = `${window.QBANK.lessonsUrl}?chapter_id=${chapterId}`;
+            const data = await fetchJson(url);
+            fillOptions(scope.lessonEl, data, "lesson_name");
+        } catch (e) {
+            console.error("Lessons load error:", e);
+        }
+    }
+
+    // ---------------------------
+    // Scopes
+    // ---------------------------
+    const pc = {
+        classEl: $("class-select-pc"),
+        subjectEl: $("subject-select-pc"),
+        chapterEl: $("chapter-select-pc"),
+        lessonEl: $("lesson-select-pc"),
+    };
+
+    const mobile = {
+        classEl: $("class-select-mobile"),
+        subjectEl: $("subject-select-mobile"),
+        chapterEl: $("chapter-select-mobile"),
+        lessonEl: $("lesson-select-mobile"), // ⚠️ HTML এ এটা যোগ করা strongly recommended
+    };
+
+    function bind(scope) {
+        if (!scope.classEl || !scope.subjectEl || !scope.chapterEl) return;
+
+        scope.classEl.addEventListener("change", () => loadSubjects(scope));
+        scope.subjectEl.addEventListener("change", () => loadChapters(scope));
+        scope.chapterEl.addEventListener("change", () => loadLessons(scope));
+    }
+
+    bind(pc);
+    bind(mobile);
+
+
+    // for type/source question
+    const sourceType = document.getElementById("source-select-pc");
+    const boardSelect = document.getElementById("board-select-pc");
+    const yearSelect = document.getElementById("year-select-pc");
+
+    if (!sourceType || !boardSelect || !yearSelect) return;
+
+    sourceType.addEventListener("change", () => {
+        const value = sourceType.value;
+
+        if (value === "board_question") {
+            boardSelect.classList.remove("hidden");
+        } else {
+            // অন্য সব ক্ষেত্রে লুকাবে + reset করবে
+            boardSelect.classList.add("hidden");
+            boardSelect.value = "";
+        }
+    });
 });
 
 // --- QUIZ CAROUSEL LOGIC (OPTIMIZED) ---

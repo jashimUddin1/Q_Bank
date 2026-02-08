@@ -5,14 +5,14 @@
             <label for="class-select-pc"
                 class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">ক্লাস (Class)</label>
             <select id="class-select-pc" class="custom-select">
-                <option value="">ক্লাস নির্বাচন করুন</option>
-                <option value="6">৬ষ্ঠ শ্রেণী</option>
-                <option value="7">৭ম শ্রেণী</option>
-                <option value="8">৮ম শ্রেণী</option>
-                <option value="9">৯ম শ্রেণী</option>
-                <option value="10">১০ম শ্রেণী</option>
+                <option value="">শ্রেনি নির্বাচন করুন</option>
+                @forelse ($classes as $class)
+                <option value="{{ $class->id }}">{{ $class->name }}</option>
+                @empty
+                <option value="" disabled>কোন ক্লাস পাওয়া যায় নি</option>
+                @endforelse
             </select>
-            <div id="group-filter-pc" class="mt-4">
+            <!-- <div id="group-filter-pc" class="mt-4">
                 <label for="group-select-pc"
                     class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">শাখা (Group)</label>
                 <select id="group-select-pc" class="custom-select">
@@ -21,7 +21,7 @@
                     <option value="arts">মানবিক (Arts)</option>
                     <option value="commerce">ব্যবসায় শিক্ষা (Commerce)</option>
                 </select>
-            </div>
+            </div> -->
         </div>
         <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
             <label for="subject-select-pc"
@@ -49,15 +49,31 @@
                 class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">প্রশ্নের উৎস
                 (Source)</label>
             <select id="source-select-pc" class="custom-select mb-2">
+                <option value="">ধরন নির্বাচন করুন</option>
+                <option value="board_question">বোর্ড প্রশ্ন</option>
+                <option value="model_question"> নমুনা প্রশ্ন</option>
+                <option value="custom_question">পছন্দসই প্রশ্ন</option>
+            </select>
+            <select id="board-select-pc" class="custom-select mb-2 hidden">
                 <option value="">বোর্ড নির্বাচন করুন</option>
                 <option value="dhaka">ঢাকা বোর্ড</option>
+                <option value="chittagong">চট্টগ্রাম বোর্ড</option>
                 <option value="rajshahi">রাজশাহী বোর্ড</option>
+                <option value="khulna">খুলনা বোর্ড</option>
+                <option value="barishal">বরিশাল বোর্ড</option>
+                <option value="sylhet">সিলেট বোর্ড</option>
+                <option value="rangpur">রংপুর বোর্ড</option>
+                <option value="mymensingh">ময়মনসিংহ বোর্ড</option>
+
             </select>
             <select id="year-select-pc" class="custom-select">
                 <option value="">সাল নির্বাচন করুন</option>
+                <option value="2026">২০২৬</option>
+                <option value="2025">২০২৫</option>
                 <option value="2024">২০২৪</option>
                 <option value="2023">২০২৩</option>
                 <option value="2022">২০২২</option>
+                <option value="2021">২০২১</option>
             </select>
         </div>
 

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AcademicClass;
 
-class TastoneController extends Controller
+class TestoneController extends Controller
 {
     public function index()
     {
-        $classes = AcademicClass::with('subjects.chapter.lessons')->get();
+        $classes = AcademicClass::select('id', 'name')->orderBy('id')->get();
 
         return view('testone', compact('classes'));
     }

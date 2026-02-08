@@ -53,6 +53,14 @@
 
     @yield('content')
 
+    <script>
+        window.QBANK = {
+            subjectsUrl: "{{ route('ajax.subjects') }}",
+            chaptersUrl: "{{ route('ajax.chapters') }}",
+            lessonsUrl: "{{ route('ajax.lessons') }}",
+        };
+    </script>
+
     <script src="{{ asset('js/app.js') }}" defer></script>
 
 </body>
